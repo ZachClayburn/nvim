@@ -15,46 +15,45 @@ local f =  require'packer'.startup(function(use)
       'nvim-lua/plenary.nvim'
     },
     config = function()
-      require('gitsigns').setup()
-      -- {
-      --   signs = {
-      --     add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
-      --     change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-      --     delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-      --     topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
-      --     changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
-      --   },
-      --   numhl = false,
-      --   linehl = false,
-      --   keymaps = {
-      --     -- Default keymap options
-      --     noremap = true,
-      --     buffer = true,
-      --
-      --     ['n ]c'] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'"},
-      --     ['n [c'] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'"},
-      --
-      --     ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-      --     ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-      --     ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-      --     ['n <leader>hR'] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
-      --     ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-      --     ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line(true)<CR>',
-      --
-      --     -- Text objects
-      --     ['o ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>',
-      --     ['x ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>'
-      --   },
-      --   watch_index = {
-      --     interval = 1000
-      --   },
-      --   current_line_blame = false,
-      --   sign_priority = 6,
-      --   update_debounce = 100,
-      --   status_formatter = nil, -- Use default
-      --   use_decoration_api = true,
-      --   use_internal_diff = true,  -- If luajit is present
-      -- }
+      require('gitsigns').setup {
+        signs = {
+          add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
+          change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+          delete       = {hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+          topdelete    = {hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn'},
+          changedelete = {hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},
+        },
+        numhl = false,
+        linehl = false,
+        keymaps = {
+          -- Default keymap options
+          noremap = true,
+          buffer = true,
+
+          ['n ]h'] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'"},
+          ['n [h'] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'"},
+
+          ['n <leader>hs'] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
+          ['n <leader>hu'] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
+          ['n <leader>hr'] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
+          ['n <leader>hR'] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
+          ['n <leader>hp'] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
+          ['n <leader>hb'] = '<cmd>lua require"gitsigns".blame_line(true)<CR>',
+
+          -- Text objects
+          ['o ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>',
+          ['x ih'] = ':<C-U>lua require"gitsigns".select_hunk()<CR>'
+        },
+        watch_index = {
+          interval = 1000
+        },
+        current_line_blame = false,
+        sign_priority = 6,
+        update_debounce = 100,
+        status_formatter = nil, -- Use default
+        use_decoration_api = true,
+        use_internal_diff = true,  -- If luajit is present
+      }
     end
   }
 
@@ -140,7 +139,7 @@ local f =  require'packer'.startup(function(use)
       vim.g.ale_detail_to_floating_preview = true
       vim.g.ale_floating_preview = true
       vim.g.ale_sign_error = 'ﮊ'
-      vim.g.ale_sign_warning ='﮻'
+      vim.g.ale_sign_warning =''
       vim.g.ale_sign_info = ''
     end
   }
@@ -152,7 +151,10 @@ local f =  require'packer'.startup(function(use)
     },
     config = function()
       vim.cmd[[let mapleader=" "]]
-      require('map')('n', '<Leader>n', ':NERDTreeToggle<CR>', {silent = true})
+      local map = require('map')
+      map('n', '<Leader>nt', ':NERDTreeToggle<CR>', {silent = true})
+      map('n', '<C-f>', ':NERDTreeFind', {silent = true})
+      map('n', '<Leader>nf', ':NERDTreeFocus', {silent = true})
     end
   }
 
@@ -173,7 +175,7 @@ local f =  require'packer'.startup(function(use)
   use { 'Yggdroot/indentLine',
     config = function()
       vim.g.indentLine_setColors = true
-      vim.g.indentLine_char = ''
+      vim.g.indentLine_char = '│'
     end
   }
 
@@ -189,6 +191,38 @@ local f =  require'packer'.startup(function(use)
         incremental_selection = { enabled = true },
         indent = { enabled = true }
       }
+    end
+  }
+
+  use { 'neovim/nvim-lspconfig',
+    config = function()
+      local nvim_lsp = require('lspconfig')
+
+      local on_attach = function(client, bufnr)
+        local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+
+        local opts = { noremap=true, silent=true }
+        buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+        buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+        buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+        -- TODO Add more keymaps. Find keymaps with :h vim.lsp
+      end
+
+      local servers = { 'clangd', 'cmake' }
+      for _, lsp in ipairs(servers) do
+        nvim_lsp[lsp].setup { on_attach = on_attach }
+      end
+    end
+  }
+
+  use { 'nvim-telescope/telescope.nvim',
+    requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
+    config = function()
+      vim.cmd[[let mapleader=" "]]
+      local map = require('map')
+      map('n', '<Leader>ff', [[<cmd>lua require('telescope.builtin').find_files()<cr>]], {silent = true})
+      map('n', '<Leader>fb', [[<cmd>lua require('telescope.builtin').buffers()<cr>]], {silent = true})
+      map('n', '<Leader>fh', [[<cmd>lua require('telescope.builtin').help_tags()<cr>]], {silent = true})
     end
   }
 end)

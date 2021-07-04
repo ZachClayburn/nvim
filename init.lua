@@ -25,6 +25,7 @@ opt('g', 'showmode', false)
 opt('w', 'list', true)
 opt('g', 'listchars', 'eol:,tab:→ ,trail:,extends:ﲖ,precedes:ﲕ')
 opt('g', 'showbreak', '↪ ')
+opt('g', 'wrap', false)
 
 local map = require('map')
 cmd[[let mapleader=" "]]
