@@ -172,14 +172,11 @@ local f =  require'packer'.startup(function(use)
 
   use 'sheerun/vim-polyglot'
 
-  use { 'Yggdroot/indentLine',
+  use { 'lukas-reineke/indent-blankline.nvim',
     config = function()
-      vim.g.indentLine_setColors = true
       vim.g.indentLine_char = '│'
     end
   }
-
-  use 'lukas-reineke/indent-blankline.nvim'
 
   use { 'nvim-treesitter/nvim-treesitter',
     opt = false,

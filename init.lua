@@ -46,3 +46,6 @@ map('t',  '<A-l>', '<C-\\><C-N><C-w>l')
 g.python3_host_prog = '/usr/bin/python3'
 
 cmd[[autocmd BufWritePost plugins.lua PackerCompile]]
+
+-- gui/neovide settings
+opt('g', 'guifont', 'JetBrainsMono Nerd Font' )
